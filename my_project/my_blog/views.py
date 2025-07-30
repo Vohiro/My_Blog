@@ -8,6 +8,8 @@ def home_page(request):
 class PostListView(ListView):
     model = Post
     template_name = 'my_blog/post_list.html'
+    context_object_name = 'posts'
+    paginate_by = 3
 
 class PostDetailView(DetailView):
     model = Post
