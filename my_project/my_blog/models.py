@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200)
+    slug = models.SlugField(max_length=200, unique_for_date='publish') # prevent saving new post with the same slug for a given date
     author = models.ForeignKey(User, on_delete=models.CASCADE,related_name='blog_posts')
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
@@ -19,4 +19,4 @@ class Post(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'pk': self.pk})
+        return reverse('post_detail', kwargs={'slug':self.slug, 'pk': self.pk})
