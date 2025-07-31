@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from .models import Post
+from .models import Post, Comment
 from django.views.generic.edit import (
     CreateView, 
     UpdateView,
@@ -8,8 +8,9 @@ from django.views.generic.edit import (
     )
 from django.utils.text import slugify
 from django.urls import reverse_lazy
-from .forms import EmailPostForm
+from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
+from django.views.decorators.http import require_POST
 
 def home_page(request):
     return render(request, 'my_blog/home_page.html')
@@ -23,6 +24,13 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'my_blog/post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.object
+        context['comments'] = post.comments.filter(active=True) # To list active comment for this post
+        context['form'] = CommentForm() # form for user to fill
+        return context
 
 class PostCreateView(CreateView):
     model = Post
@@ -67,3 +75,17 @@ def post_share(request, pk):
     return render(request, 'my_blog/post_share.html', {'post': post,
                                                        'form': form,
                                                        'sent': sent})
+
+@require_POST
+def post_comment(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    comment = None
+
+    #To handle a posted comment
+    form = CommentForm(data=request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False) # To create a comment object without saving it to database
+        comment.post = post # Assign the post to comment
+        comment.save() # save comment to database
+    context = {'post': post, 'form': form, 'comment': comment}
+    return render(request, 'my_blog/post_comment.html', context)
