@@ -8,6 +8,9 @@
  Published {{ post.publish }} by {{ post.author }}
  </p>
  {{ post.body|linebreaks }}
+ <p>
+    <a href="{% url 'post_share' post.pk %}">Share this Post</a>
+ </p>
  <a href="{% url 'post_edit' post.pk %}">Edit Post</a>
  <a> | </a>
  <a href="{% url 'post_delete' post.pk %}">Delete Post</a>
