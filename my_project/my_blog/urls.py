@@ -14,6 +14,9 @@ urlpatterns = [
     path('', home_page, name='home_page'),
     # Post views
     path('blog/post_list/', PostListView.as_view(), name='post_list'),
+    # Post by tag view
+    path('blog/tag/<slug:tag_slug>/', PostListView.as_view(), name='post_list_by_tag'),
+
     path('blog/post_detail/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('blog/<slug:slug>/<int:pk>/', PostDetailView.as_view(), name='post_detail'),
     path('blog/post_new/', PostCreateView.as_view(), name='post_new'),

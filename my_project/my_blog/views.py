@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
+from taggit.models import Tag
 
 def home_page(request):
     return render(request, 'my_blog/home_page.html')
@@ -20,6 +21,22 @@ class PostListView(ListView):
     template_name = 'my_blog/post_list.html'
     context_object_name = 'posts'
     paginate_by = 3
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.tag = None
+        tag_slug = self.kwargs.get('tag_slug')
+
+        if tag_slug:
+            self.tag = get_object_or_404(Tag, slug=tag_slug)
+            queryset = queryset.filter(tags__in=[self.tag])
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context 
+    
 
 class PostDetailView(DetailView):
     model = Post
