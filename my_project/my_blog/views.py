@@ -12,6 +12,7 @@ from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from taggit.models import Tag
+from django.db.models import Count
 
 def home_page(request):
     return render(request, 'my_blog/home_page.html')
@@ -45,8 +46,19 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = self.object
+
+        # For comments
         context['comments'] = post.comments.filter(active=True) # To list active comment for this post
         context['form'] = CommentForm() # form for user to fill
+
+        # Similar post based on shared tags
+        post_tag_ids = post.tags.values_list('id', flat=True)
+        similar_posts = Post.objects.filter(tags__in=post_tag_ids)\
+            .exclude(id=post.id)\
+            .annotate(same_tags=Count('tags'))\
+            .order_by('-same_tags', '-created')[:4]
+        context['similar_posts'] = similar_posts
+
         return context
 
 class PostCreateView(CreateView):
