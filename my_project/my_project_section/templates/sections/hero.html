@@ -1,0 +1,21 @@
+{% load static %}
+<section class="hero" id="home">
+  <div class="container hero-inner">
+    <div class="hero-left" data-aos="fade-right">
+      <h1 class="hero-title">Hi — I’m <span class="accent">David Vohiro</span></h1>
+      <p class="hero-sub">Backend Developer • Django • APIs • Data</p>
+      <p class="hero-desc">I build reliable backend systems and APIs that help products scale. I enjoy clean architecture, tests, and readable code.</p>
+
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#projects" data-aos="zoom-in">View Projects</a>
+        <a class="btn btn-ghost" href="#contact" data-aos="zoom-in" data-aos-delay="120">Contact Me</a>
+      </div>
+    </div>
+
+    <div class="hero-right" data-aos="fade-left">
+      <div class="avatar">
+        <img src="{% static 'img/profile.png' %}" alt="Profile photo">
+      </div>
+    </div>
+  </div>
+</section>

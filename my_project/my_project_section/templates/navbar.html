@@ -1,0 +1,23 @@
+<nav class="site-nav">
+  <div class="container nav-inner">
+    <a class="brand" href="/">{% block brand %}YourName{% endblock %}</a>
+
+    <button id="nav-toggle" aria-label="toggle menu" class="nav-toggle">☰</button>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="/resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  // small mobile toggle
+  document.addEventListener('DOMContentLoaded', () => {
+    const t = document.getElementById('nav-toggle');
+    const links = document.getElementById('nav-links');
+    t.addEventListener('click', () => links.classList.toggle('open'));
+  });
+</script>

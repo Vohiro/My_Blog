@@ -1,0 +1,30 @@
+{% load static %}
+<section id="projects" class="section projects" data-aos="fade-up">
+  <div class="container">
+    <h2 class="section-title">Selected Projects</h2>
+
+    <div class="project-grid">
+      <!-- Project 1 -->
+      <article class="project-card" data-aos="fade-up" data-aos-delay="0">
+        <img class="project-img" src="{% static 'img/Blog_image.jpg' %}" alt="Project 1">
+        <div class="project-body">
+          <h3>Blog Platform (Django)</h3>
+          <p>Full-featured blog with tags, comments, and admin customization.</p>
+          <a class="btn btn-sm" href="#">View</a>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card" data-aos="fade-up" data-aos-delay="120">
+        <img class="project-img" src="{% static 'img/Merge_data.png' %}" alt="Project 2">
+        <div class="project-body">
+          <h3>E-commerce API</h3>
+          <p>REST API with order flows, product management, and payments.</p>
+          <a class="btn btn-sm" href="#">View</a>
+        </div>
+      </article>
+
+      <!-- Duplicate cards as needed -->
+    </div>
+  </div>
+</section>
