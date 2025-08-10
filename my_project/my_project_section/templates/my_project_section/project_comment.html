@@ -1,0 +1,11 @@
+{% extends "my_project_section/base.html" %}
+
+{% block title %}Add a comment{% endblock %}
+{% block content %}
+    {% if comment %}
+        <h2>Your comment has been added.</h2>
+        <p><a href="{{ project.get_absolute_url }}">Back to the project</a></p>
+    {% else %}
+        {% include "my_project_section/comment_form.html" %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "my_project_section/base.html" %}
+{% load static %}
+
+{% block title %}My Project section{% endblock %}
+
+{% block content %}
+<section class="project-gallery">
+    <h1>Featured Projects</h1>
+    <div class="project-grid">
+        {% for project in projects %}
+        <div class="project-card">
+            <video autoplay muted loop playsinline preload="metadata" width="100%">
+                <source src="{{ project.preview_video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="project-info">
+                <h2>{{ project.title }}</h2>
+                <p>{{ project.body|truncatewords:15 }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% include 'my_project_section/pagination.html' with  page=projects %}
+{% endblock %}

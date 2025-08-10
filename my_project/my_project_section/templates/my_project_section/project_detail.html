@@ -1,0 +1,43 @@
+{% extends "my_project_section/base.html" %}
+
+{% block title %}{{ project.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ project.title }}</h1>
+    <p class="date">
+        Published {{ project.publish }} by {{ proejct.author }}
+    </p>
+    <div class="project-card">
+            <video autoplay muted loop playsinline preload="metadata" width="100%">
+                <source src="{{ project.preview_video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="project-info">
+                <p>{{ project.body|linebreaks }}</p>
+            </div>
+    </div>
+    <p>
+        <a href="{% url 'project_share' project.pk %}">Share this Project</a>
+    </p>
+    <a href="{% url 'project_edit' project.pk %}">Edit Project</a>
+    <a> | </a>
+    <a href="{% url 'project_delete' project.pk %}">Delete Project</a>
+    
+    {% with comments.count as total_comments %}
+        <h2>
+            {{ total_comments }} comment{{ total_comments|pluralize }}
+        </h2>
+    {% endwith %}
+    {% for comment in comments %}
+    <div class="comment">
+        <p class="info">
+            Comment {{ forloop.counter }} by {{ comment.name }}
+            {{ comment.created }}
+        </p>
+        {{ comment.body|linebreaks }}
+    </div>
+    {% empty %}
+        <p>There are no comments.</p>
+    {% endfor %}
+    {% include "my_project_section/comment_form.html" %}
+{% endblock %}
