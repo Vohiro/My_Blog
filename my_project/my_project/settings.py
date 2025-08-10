@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Apps
+    # My blog App section
     'my_blog.apps.MyBlogConfig',
+    # My Project App section
+    'my_project_section.apps.MyProjectSectionConfig',
     # third party apps
     'taggit',
 ]
